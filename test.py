@@ -8,8 +8,11 @@ from htmldom import htmldom
 
 dom = htmldom.HtmlDom("http://m.naver.com").createDom()
 
-p = dom.find("*")
+p = dom.find("span").attr("class", "rtk_t")
 
-print(p.html())
+# print(p.first().html())
+
+for meta in p:
+    print(meta.html())
 
 
