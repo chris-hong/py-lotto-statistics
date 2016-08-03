@@ -6,8 +6,8 @@ class StockHistoryDAO:
     con = None
 
     def __init__(self, db_path):
-        con = sqlite3.connect(db_path)
-        cursor = con.cursor()
+        self.con = sqlite3.connect(db_path)
+        cursor = self.con.cursor()
         cursor.execute('SELECT * FROM record_data')
         for row in cursor:
             print(row)
