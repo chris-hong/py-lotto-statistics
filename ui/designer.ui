@@ -248,6 +248,9 @@
       <pointsize>10</pointsize>
      </font>
     </property>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>50</number>
+    </attribute>
    </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_selec_number">

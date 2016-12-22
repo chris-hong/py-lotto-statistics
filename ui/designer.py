@@ -57,9 +57,11 @@ class TableModel(QAbstractTableModel):
     def data(self, index, role):
         if not index.isValid():
             return QVariant()
-        elif role != Qt.DisplayRole:
-            return QVariant()
-        return QVariant(self.tableData[index.row()][index.column()])
+        elif role == Qt.DisplayRole:
+            return QVariant(self.tableData[index.row()][index.column()])
+        elif role == Qt.TextAlignmentRole:
+            return QVariant(Qt.AlignCenter | Qt.AlignVCenter)
+        return QVariant()
 
 class ListModel(QAbstractListModel):
     def __init__(self, dataIn, parent=None, *args):
