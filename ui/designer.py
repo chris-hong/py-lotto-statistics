@@ -2,18 +2,24 @@
 from PyQt5 import QtWidgets
 from PyQt5 import uic
 from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+# from PyQt5.QtGui import *
+
+from stock_history_mananger import StockHistoryMananger
 
 class PLS_Form(QtWidgets.QDialog):
 
     def __init__(self, parent=None):
         QtWidgets.QDialog.__init__(self, parent)
+
+        self.stockHistoryManager = StockHistoryMananger()
         self.ui = uic.loadUi("designer.ui", self)
         self.ui.show()
 
     @pyqtSlot()
     def slot_update(self):
         # tkinter.messagebox.showinfo('확인', '클릭 UPDATE')
+
+        self.stockHistoryManager.update_stock_history()
 
         my_array = [[10, 15],
                     [7, 14],
