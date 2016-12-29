@@ -1,5 +1,6 @@
 from stock_history_dao import StockHistoryDAO
 from stock_info_crawl import StockInfoCrawl
+from util.event_hook import EventHook
 
 from datetime import datetime
 
@@ -9,8 +10,10 @@ class StockHistoryMananger:
         print('start StockHistoryManager')
         self. __stockOriginData = datetime(2002, 12, 7)
 
-        self.stockInfoCrawl = StockInfoCrawl()
-        self.stockHistoryDAO = StockHistoryDAO()
+        self.__stockInfoCrawl = StockInfoCrawl()
+        self.__stockHistoryDAO = StockHistoryDAO()
+
+        self.onProgressChanged = EventHook()
 
     def update_stock_history(self):
         list_history = []
@@ -23,14 +26,15 @@ class StockHistoryMananger:
                 list_unknown_turn.append(index)
 
         for unknown in list_unknown_turn:
-            info = self.stockInfoCrawl.get_stock_info(unknown)
+            info = self.__stockInfoCrawl.get_stock_info(unknown)
             list_history.append(info)
             progress = (list_unknown_turn.index(unknown) + 1) / len(list_unknown_turn) * 100
+            self.onProgressChanged.fire(progress)
             print('### Crawling progress : %d%% ###' % progress)
 
-        self.stockHistoryDAO.insert_data_many(list_history)
+        self.__stockHistoryDAO.insert_data_many(list_history)
 
-        data_all = self.stockHistoryDAO.select_data_all()
+        data_all = self.__stockHistoryDAO.select_data_all()
         first_turn = data_all[0][0]
         data_all.reverse()
         last_turn = data_all[0][0]
@@ -46,7 +50,7 @@ class StockHistoryMananger:
         return (datetime.today() - self.__stockOriginData).days // 7 + 1
 
     def __check_turn_data(self, _turn):
-        res = self.stockHistoryDAO.check_turn_data((_turn, ))
+        res = self.__stockHistoryDAO.check_turn_data((_turn,))
         if res == None:
             return False
         else:

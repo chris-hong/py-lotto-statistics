@@ -12,6 +12,8 @@ class PLS_Form(QtWidgets.QDialog):
         QtWidgets.QDialog.__init__(self, parent)
 
         self.stockHistoryManager = StockHistoryMananger()
+        self.stockHistoryManager.onProgressChanged += self.__stock_history_progress_changed
+
         self.ui = uic.loadUi("designer.ui", self)
         self.ui.show()
 
@@ -23,12 +25,12 @@ class PLS_Form(QtWidgets.QDialog):
         self.spinBox_from.setValue(tuple_turn_info[0])
         self.spinBox_to.setValue(tuple_turn_info[1])
 
-        my_array = [[10, 15],
-                    [7, 14],
-                    [3, 44]]
-
-        tableModel = TableModel(my_array, self)
-        self.tableView.setModel(tableModel)
+        # my_array = [[10, 15],
+        #             [7, 14],
+        #             [3, 44]]
+        #
+        # tableModel = TableModel(my_array, self)
+        # self.tableView.setModel(tableModel)
 
     @pyqtSlot()
     def slot_analyze(self):
@@ -42,6 +44,9 @@ class PLS_Form(QtWidgets.QDialog):
         ]
         listModel = ListModel(foods, self)
         self.listView.setModel(listModel)
+
+    def __stock_history_progress_changed(self, progress):
+        self.progressBar_update.setValue(progress)
 
 
 class TableModel(QAbstractTableModel):
