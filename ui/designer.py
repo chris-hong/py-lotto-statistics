@@ -19,7 +19,9 @@ class PLS_Form(QtWidgets.QDialog):
     def slot_update(self):
         # tkinter.messagebox.showinfo('확인', '클릭 UPDATE')
 
-        self.stockHistoryManager.update_stock_history()
+        tuple_turn_info = self.stockHistoryManager.update_stock_history()
+        self.spinBox_from.setValue(tuple_turn_info[0])
+        self.spinBox_to.setValue(tuple_turn_info[1])
 
         my_array = [[10, 15],
                     [7, 14],

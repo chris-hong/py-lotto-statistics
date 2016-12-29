@@ -6,6 +6,8 @@ class StockHistoryDAO:
     db_path = '../analysis_data/history_data.db'
     sql_insert = '''INSERT INTO record_data(turn, num1, num2, num3, num4, num5, num6, bonus, rank1, rank2, rank3, rank4, rank5, total_sales) ''' \
                  '''VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+    sql_select_all = 'SELECT * FROM record_data ORDER BY turn ASC'
+    sql_select_check_turn = 'SELECT * FROM record_data WHERE turn=?'
 
     def __init__(self):
         self.conn = sqlite3.connect(self.db_path)
@@ -36,18 +38,25 @@ class StockHistoryDAO:
             except sqlite3.Error as e:
                 print('[SQLITE ERR]: ', e.args[0])
 
-    def select_data(self):
+    def select_data_all(self):
         with self.conn:
             try:
                 cursor = self.conn.cursor()
-                cursor.execute(self.sql_select)
+                cursor.execute(self.sql_select_all)
                 return cursor.fetchall()
             except sqlite3.Error as e:
                 print('[SQLITE ERR]: ', e.args[0])
 
+    def check_turn_data(self, _turn):
+        with self.conn:
+            try:
+                cursor = self.conn.cursor()
+                cursor.execute(self.sql_select_check_turn, _turn)
+                return cursor.fetchone()
+            except sqlite3.Error as e:
+                print('[SQLITE ERR]: ', e.args[0])
 
 author = 'chris-hong'
-
 
 # con = sqlite3.connect('analysis_data/history_data_20160726.db')
 # cursor = con.cursor()
