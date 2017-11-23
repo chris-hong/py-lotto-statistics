@@ -1,0 +1,1 @@
+View Sqlite Program : DB Browser (https://github.com/sqlitebrowser/sqlitebrowser/releases)

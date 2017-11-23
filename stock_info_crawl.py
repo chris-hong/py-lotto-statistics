@@ -3,7 +3,7 @@ from htmldom import htmldom
 
 
 class StockInfoCrawl:
-    urlBase = 'http://m.nlotto.co.kr/lotto645Confirm.do?method=byWin&drwNo='
+    urlBase = 'http://m.nlotto.co.kr/gameResult.do?method=byWin&drwNo='
 
     def __init__(self):
         print('StockInfoCrawl is loaded')
@@ -49,7 +49,7 @@ class StockInfoCrawl:
         # print(d_num6)
 
         # 보너스 번호
-        img_bonus = dom.find('p.number_bonus').children()
+        img_bonus = dom.find('span.number_bonus').children()
         bonus = img_bonus[0].attr('alt')
         d_bonus = int(bonus)
         # print(d_bonus)

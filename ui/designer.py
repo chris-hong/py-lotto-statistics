@@ -6,6 +6,7 @@ from PyQt5.QtCore import *
 
 from stock_history_mananger import StockHistoryMananger
 
+
 class PLS_Form(QtWidgets.QDialog):
 
     def __init__(self, parent=None):
